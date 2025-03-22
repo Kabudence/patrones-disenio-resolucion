@@ -7,6 +7,8 @@
  *
  */
 
+import {COLORS} from "../helpers/colors";
+
 /**
  1.	Completen el método copyWith en la clase Player para que permita 
  crear una copia con cambios en name, score o level.
@@ -15,7 +17,7 @@
  haciendo cambios en el puntaje, nivel y nombre del jugador.
  */
 
-import { COLORS } from '../helpers/colors.ts';
+
 
 // 1. Clase Player inmutable
 class Player {
@@ -24,20 +26,53 @@ class Player {
   readonly level: number;
 
   constructor(name: string, score: number, level: number) {
-    throw new Error('Method not implemented.');
-  }
+        this.name = name;
+        this.score = score;
+        this.level = level;
+    }
 
   // Método copyWith para crear una copia modificada del jugador
   copyWith({ name, score, level }: Partial<Player>): Player {
-    throw new Error('Method not implemented.');
+     return new Player(name??=this.name, score??=this.score, level??=this.level);
   }
-
+  
   displayState(): void {
     console.log(`\n%cJugador: ${this.name}`, COLORS.green);
     console.log(`%cPuntaje: ${this.score}`, COLORS.yellow);
     console.log(`%cNivel: ${this.level}`, COLORS.blue);
   }
 }
+
+class playerHistory {
+  private history: Player[] = [];
+  private currentIndex = -1;
+  
+  save(state: Player) {
+    if (this.currentIndex < this.history.length) {
+      this.history = this.history.slice(0, this.currentIndex + 1);
+    }
+
+    this.history.push(state);
+    this.currentIndex++;
+  }
+  redo(): Player | null {
+    if (this.currentIndex < this.history.length - 1) {
+      this.currentIndex++;
+      return this.history[this.currentIndex];
+    }
+    return null;
+  }
+  undo(): Player | null {
+    if(this.currentIndex>0){
+      this.currentIndex--;
+        return this.history[this.currentIndex];
+    }
+    return null;
+  }
+  
+  
+}
+
 
 // 2. Código Cliente para probar
 function main() {

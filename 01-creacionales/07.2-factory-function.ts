@@ -14,7 +14,8 @@
 //* [WARNING:2025-10-21:07] El uso de memoria está alto.
 //* [ERROR:2025-10-21:07] Error de conexión a la base de datos.
 
-import { COLORS } from '../helpers/colors.ts';
+
+
 
 function formatDate(date: Date): string {
   const year = date.getFullYear();
@@ -31,9 +32,14 @@ function formatDate(date: Date): string {
 type LogLevel = 'info' | 'warn' | 'error';
 
 function createLogger(level: LogLevel) {
-  // Retorna una función que recibe el "message" como argumento
-  // Completar: implementar el logger con formato y color para cada nivel
-  throw new Error('Not implemented');
+  return function (name: string) {
+    const messages= {
+      info : `[INFO:${formatDate(new Date())}] ${name}`,
+      warn : `[WARNING:${formatDate(new Date())}] ${name}`,
+        error : `[ERROR:${formatDate(new Date())}] ${name}`
+    }
+    return console.log(messages[level]);
+  }
 }
 
 // Ejemplo de uso

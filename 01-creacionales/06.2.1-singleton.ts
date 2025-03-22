@@ -9,3 +9,14 @@
  *
  * https://refactoring.guru/es/design-patterns/singleton
  */
+
+
+import {configManager} from "./singleton/config-manager";
+
+configManager.setConfig('url','https://localhost:3000/api');
+configManager.setConfig('timeout','1000');
+configManager.setConfig('maxConnections','5');
+
+console.log(configManager.getConfig('maxConnections'));
+console.log(configManager.getConfig('timeout'));
+console.log(configManager.getConfig('url'));

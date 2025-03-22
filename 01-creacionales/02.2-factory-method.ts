@@ -24,30 +24,37 @@
       el prompt para seleccionar el tipo de reporte.
  */
 
-import { COLORS } from '../helpers/colors.ts';
+
+
+
 
 // 1. Definir la interfaz Report
-interface Report {
+interface IReport {
   generate(): void;
+  
 }
 
 // 2. Clases concretas de Reportes
 // Implementar SalesReport e InventoryReport
 
-class SalesReport implements Report {
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de ventas...'
+class SalesReport implements IReport {
+    generate() {
+        console.log('Generando reporte de ventas...');
+    }
+
 }
 
-class InventoryReport implements Report {
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de inventario...'
+class InventoryReport implements IReport {
+
+    generate() {
+        console.log('Generando reporte de inventario...');
+    }
 }
 
 // 3. Clase Base ReportFactory con el Método Factory
 
 abstract class ReportFactory {
-  abstract createReport(): Report;
+  abstract createReport(): IReport;
 
   generateReport(): void {
     const report = this.createReport();
@@ -58,27 +65,34 @@ abstract class ReportFactory {
 // 4. Clases Concretas de Fábricas de Reportes
 
 class SalesReportFactory extends ReportFactory {
-  createReport(): Report {
-    throw new Error('Method not implemented.');
+  createReport(): IReport {
+    return new SalesReport();
   }
 }
 
 class InventoryReportFactory extends ReportFactory {
-  createReport(): Report {
-    throw new Error('Method not implemented.');
+  createReport(): IReport {
+    return new InventoryReport();
   }
+  inventoryMethod(){console.log("Informacion extra de inventario")}
 }
 
 // 5. Código Cliente para Probar
+import readlineSync from 'readline-sync';
 
 function main() {
   let reportFactory: ReportFactory;
+  let inventoryReportFactory= new InventoryReportFactory;
+  let inventory=new  InventoryReport;
+  inventory.generate()
+    inventoryReportFactory.generateReport()   
+    
+    const reportType = readlineSync.question(
+    '¿Que tipo de reporte deseas? %c(sales/inventory)',
 
-  const reportType = prompt(
-    '¿Qué tipo de reporte deseas? %c(sales/inventory)',
-    COLORS.red
   );
-
+    
+    
   if (reportType === 'sales') {
     reportFactory = new SalesReportFactory();
   } else {
