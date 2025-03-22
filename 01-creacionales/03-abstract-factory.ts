@@ -51,7 +51,7 @@ class Water implements Drink{
 
 interface RestaurantFactory{
     createHamburger(): Hamburger;
-    createDrink(): Drink;
+    createDrink(): Drink; 
     
 }
 
