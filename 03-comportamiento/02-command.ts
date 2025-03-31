@@ -12,6 +12,7 @@
  *
  *
  */
+import * as readlineSync from 'readline-sync';
 
 interface Command{
     execute():void;
@@ -111,9 +112,9 @@ function main() : void{
 
     do{
         console.clear();
-        const pressedButton= prompt( `presiona button que quieres:\n 1,2,3,4`)??''
+        const pressedButton= readlineSync.question( `presiona button que quieres:\n 1,2,3,4\n`)??''
         remoteControl.pressButton(pressedButton);
-        const continueResponse= prompt(`\n Desea continuar? y/n`)
+        const continueResponse= readlineSync.question(`Desea continuar? y/n`)
         
         continueProgram = continueResponse =='n' ?false:true;
     }while(continueProgram);
