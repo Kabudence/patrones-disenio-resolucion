@@ -8,8 +8,8 @@
  *
  * https://refactoring.guru/es/design-patterns/memento
  */
+import {COLORS} from "../helpers/colors";
 
-import { COLORS } from '../helpers/colors.ts';
 
 // Una pizarra donde se pueden agregar figuras
 
@@ -44,8 +44,7 @@ class DrawingBoard {
 
   // Crear un Memento del estado actual de la pizarra
   save(): DrawingMemento {
-    // TODO: Implementar el método save para guardar el estado actual
-    throw new Error('Method not implemented.');
+    return new DrawingMemento(this.shapes);
   }
 
   // Restaurar el estado de la pizarra desde un Memento
@@ -62,13 +61,13 @@ class History {
   // Guardar un Memento
   // TODO: Implementar push para guardar en la historia
   push(memento: DrawingMemento): void {
-    throw new Error('Method not implemented.');
+    this.mementos.push(memento);
   }
 
   // Recuperar el último Memento
   // TODO: Implementar pop para recuperar el último memento
   pop(): DrawingMemento | undefined {
-    throw new Error('Method not implemented.');
+   return this.mementos.pop()!;
   }
 }
 
