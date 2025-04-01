@@ -8,8 +8,6 @@
  *
  * https://refactoring.guru/es/design-patterns/iterator
  */
-
-// Clase que representa una Carta de la baraja
 class Card {
   name: string;
   value: number;
@@ -20,7 +18,30 @@ class Card {
   }
 }
 
-// Clase que representa la colección de Cartas
+// 🔹 Clase Iteradora Personalizada
+class CardIterator implements IterableIterator<Card> {
+  private index = 0;
+  private cards: Card[];
+
+  constructor(cards: Card[], private ascending: boolean) {
+    // Ordenamos las cartas en base al orden especificado
+    this.cards = [...cards].sort((a, b) => ascending ? a.value - b.value : b.value - a.value);
+  }
+
+  next(): IteratorResult<Card> {
+    if (this.index < this.cards.length) {
+      return { value: this.cards[this.index++], done: false };
+    } else {
+      return { value: null, done: true };
+    }
+  }
+
+  [Symbol.iterator](): IterableIterator<Card> {
+    return this;
+  }
+}
+
+// 🔹 Clase que representa la colección de cartas
 class CardCollection {
   private cards: Card[] = [];
 
@@ -28,27 +49,34 @@ class CardCollection {
     this.cards.push(card);
   }
 
-  //TODO: Implementación del iterador usando Symbol.iterator
-  // Symbol.iterator (): IterableIterator<Card>
+  // Implementamos el iterador para orden ascendente
+  getAscIterator(): IterableIterator<Card> {
+    return new CardIterator(this.cards, true);
+  }
 
-  // TODO: Implementación del iterador usando Generadores
-  // *getCard(): IterableIterator<Card>
+  // Implementamos el iterador para orden descendente
+  getDescIterator(): IterableIterator<Card> {
+    return new CardIterator(this.cards, false);
+  }
 }
 
 // Código Cliente para probar el iterador
-
 function main(): void {
   const deck = new CardCollection();
 
-  // Agregar algunas cartas a la colección
-  deck.addCard(new Card('As de Corazones', 1));
+  // Agregar algunas cartas a la colección (desordenadas)
   deck.addCard(new Card('Rey de Corazones', 13));
-  deck.addCard(new Card('Reina de Corazones', 12));
   deck.addCard(new Card('Jota de Corazones', 11));
+  deck.addCard(new Card('As de Corazones', 1));
+  deck.addCard(new Card('Reina de Corazones', 12));
 
-  // Recorrer la colección en orden usando for...of
-  console.log('Recorriendo la colección de cartas:');
-  for (const card of deck) {
+  console.log('Cartas ordenadas de menor a mayor:');
+  for (const card of deck.getAscIterator()) {
+    console.log(`Carta: ${card.name}, Valor: ${card.value}`);
+  }
+
+  console.log('\nCartas ordenadas de mayor a menor:');
+  for (const card of deck.getDescIterator()) {
     console.log(`Carta: ${card.name}, Valor: ${card.value}`);
   }
 }

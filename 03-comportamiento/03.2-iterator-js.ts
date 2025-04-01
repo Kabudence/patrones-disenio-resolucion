@@ -27,6 +27,16 @@ class PokemonCollection {
   addPokemon(pokemon: Pokemon): void {
     this.pokemons.push(pokemon);
   }
+  
+  // *getPokemons(): IterableIterator<Pokemon> {
+  //   for(const pokemon of this.pokemons){
+  //     yield pokemon;
+  //   }
+  // }
+  *[Symbol.iterator](): IterableIterator<Pokemon> {
+    yield *this.pokemons;
+  }
+  
 
   //TODO: Implementación del iterador usando una función generadora
 
