@@ -13,42 +13,46 @@
  *
  * https://refactoring.guru/es/design-patterns/observer
  */
+import {COLORS} from "../helpers/colors";
 
-import { COLORS } from '../helpers/colors.ts';
 
 // Interfaz Observer
 interface Observer {
   update(weatherData: string): void;
+  getName(): string;
 }
 
 // Clase Subject - WeatherStation
 // TODO: Terminal la implementación
 class WeatherStation {
-  // observers = [];
-  // weatherData = 'Soleado';
+  private observers: Observer[]= [];
+  private weatherData:string = 'Soleado';
 
   // Agregar un Observer
   subscribe(observer: Observer): void {
-    // TODO: añadir observer
-
+    this.observers.push(observer);
+    
     console.log(
-      '%cNueva aplicación suscrita al sistema meteorológico.',
+      `%c${observer.getName()} se ha suscrito al sistema meteorológico.`,
       COLORS.green
     );
   }
 
   // Eliminar un Observer
   unsubscribe(observer: Observer): void {
-    // TODO: eliminar observer
-
+    const observers = this.observers.filter(obse=>obse!==observer);
+    this.observers = observers;
     console.log(`%cUna aplicación se ha dado de baja`, COLORS.red);
   }
 
   // Actualizar el clima y notificar a todos los Observers
   setWeather(weatherData: string): void {
     console.log(`\nClima actualizado: %c${weatherData}`, COLORS.blue);
-
-    // TODO: actualizar clima y notificar a todos los Observers con el método notifyObservers
+    
+    for (const observer of this.observers) {
+        observer.update(weatherData);
+    }
+    
   }
 
   // Notificar a todos los Observers
@@ -74,6 +78,9 @@ class WeatherApp implements Observer {
       COLORS.white,
       COLORS.yellow
     );
+  }
+  getName(): string {
+    return this.name;
   }
 }
 
