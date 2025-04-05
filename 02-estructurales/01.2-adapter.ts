@@ -10,8 +10,8 @@
  *
  * https://refactoring.guru/es/design-patterns/adapter
  */
+import {COLORS} from "../helpers/colors";
 
-import { COLORS } from '../helpers/colors.ts';
 
 // 1. Interfaz PaymentProcessor
 interface PaymentProcessor {
