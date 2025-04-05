@@ -26,3 +26,59 @@
  * ya que define un esqueleto general del algoritmo en una clase base
  * y delega los detalles específicos a las subclases.
  */
+
+abstract class HotBeverage{
+    
+    prepare(){
+        this.boilWater();
+        this.addMainIngredient()
+        this.pourInCub()
+        this.addCondiments()
+    }
+    
+    private boilWater(){
+        console.log('Hirviendo agua...')
+    }
+    
+    private pourInCub(){
+        console.log('Sirviendo en la taza...')
+    }
+    
+    protected abstract addMainIngredient(): void;
+    protected abstract addCondiments(): void;
+    
+    
+}
+
+class Tea extends HotBeverage{
+    
+    protected override addMainIngredient(){
+        console.log('Aniadiendo bolsa de te')
+     }
+
+    protected override addCondiments() {
+        console.log('Aniadiendo miel y limon')
+    }
+}
+
+class Coffe extends HotBeverage{
+
+    protected override addMainIngredient(){
+        console.log('Aniadiendo caffe molido')
+    }
+
+    protected override addCondiments() {
+        console.log('Aniadiendo estevia')
+    }
+}
+
+function main(){
+    console.log('Preparando el te\n');
+    const tea= new Tea();
+    tea.prepare(); 
+    console.log('\nPreparando el cafe\n');
+    const caffe= new Coffe();
+    caffe.prepare();
+}
+
+main();

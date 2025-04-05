@@ -14,6 +14,8 @@
  * https://refactoring.guru/es/design-patterns/template-method
  */
 
+import {COLORS} from "../helpers/colors";
+
 /**
  * !Objetivo: 
  * Implementar el patrón Template Method para simular un sistema de limpieza 
@@ -38,7 +40,6 @@
     5.	Salir de la habitación: Cerrar la puerta y marcar como terminada
  */
 
-import { COLORS } from '../helpers/colors.ts';
 
 // Clase Base - RoomCleaning
 abstract class RoomCleaning {
@@ -70,27 +71,34 @@ abstract class RoomCleaning {
     console.log('Saliendo de la habitación y marcándola como limpia.');
   }
 
-  // Método abstracto para limpieza específica
-  // TODO: Implementar el método specificCleaning en las subclases
-  // protected abstract? ambas?
+  protected abstract specificCleaning():void;
 }
 
 // Subclase - HotelRoomCleaning
 class HotelRoomCleaning extends RoomCleaning {
-  // TODO: Implementar método específico
-  // Mensaje: 'Haciendo las camas y reponiendo artículos de baño.'
+    // TODO: Implementar método específico
+    // Mensaje: 'Haciendo las camas y reponiendo artículos de baño.'
+    protected override specificCleaning() {
+      console.log(' Haciendo las camas y reponiendo artículos de baño');
+    }
 }
 
 // Subclase - ConferenceRoomCleaning
 class ConferenceRoomCleaning extends RoomCleaning {
   // TODO: Implementar método específico
   // Mensaje: 'Limpiando mesas y organizando sillas.'
+  protected override specificCleaning() {
+    console.log(' Limpiando mesas y organizando sillas.');
+  }
 }
 
 // Subclase - OfficeCleaning
 class OfficeCleaning extends RoomCleaning {
   // TODO: Implementar método específico
   // Mensaje: 'Limpiando escritorios y organizando documentos.'
+  protected override specificCleaning() {
+    console.log(' Limpiando escritorios y organizando documentos.');
+  }
 }
 
 // Código Cliente

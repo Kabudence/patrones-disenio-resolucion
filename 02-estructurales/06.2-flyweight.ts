@@ -118,6 +118,7 @@ function main() {
   shootingSystem.shoot(20, 30, 180, 'Rifle', 15, 'Verde');
   shootingSystem.shoot(10, 20, 45, 'Pistola', 10, 'Gris');
   shootingSystem.shoot(25, 35, 270, 'Escopeta', 20, 'Rojo');
+  shootingSystem.shoot(25, 35, 270, 'Escopeta', 20, 'Azul');
 
   console.log(
     `Total de balas disparadas: %c${shootingSystem.getBulletCount()}\n`,

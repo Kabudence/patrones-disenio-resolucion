@@ -12,8 +12,10 @@
  * https://refactoring.guru/es/design-patterns/factory-method
  *
  */
+import * as readlineSync from 'readline-sync';
 
-import { COLORS } from '../helpers/colors.ts';
+import {COLORS} from "../helpers/colors";
+
 
 interface Hamburger {
   prepare(): void;
@@ -47,9 +49,9 @@ abstract class Restaurant {
 }
 
 class ChickenRestaurant extends Restaurant {
-  override createHamburger(): Hamburger {
-    return new ChickenHamburger();
-  }
+    protected override createHamburger(): Hamburger {
+        return new ChickenHamburger();
+    }
 }
 
 class BeefRestaurant extends Restaurant {
@@ -67,8 +69,8 @@ class BeanRestaurant extends Restaurant {
 function main() {
   let restaurant: Restaurant;
 
-  const burgerType = prompt(
-    '¿Qué tipo de hamburguesa quieres? ( chicken/beef/bean )'
+  const burgerType = readlineSync.question(
+    '¿Que tipo de hamburguesa quieres? ( chicken/beef/bean )'
   );
 
   switch (burgerType) {
